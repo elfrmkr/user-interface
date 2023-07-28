@@ -155,7 +155,6 @@ const Signup = () => {
               sx={{ width: 156, height: 156 }}
             />
           )}
-
           <Typography variant="h6">Username: {submittedData.username}</Typography>
           <Typography variant="h6">Email: {submittedData.email}</Typography>
           <Typography variant="body1">Description: {submittedData.description}</Typography>
