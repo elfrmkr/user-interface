@@ -9,6 +9,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Signup = () => {
   // State to manage form data
@@ -87,6 +91,9 @@ const Signup = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
             fullWidth
           />
         </Box>
@@ -98,6 +105,9 @@ const Signup = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
             fullWidth
           />
         </Box>
@@ -148,19 +158,51 @@ const Signup = () => {
       </form>
       {/* Display the selected photo if available */}
       {submittedData && (
-        <Box mt={4}>
-          <Typography variant="h4">Your Profile</Typography>
-          {submittedData.photo && (
-            <Avatar alt="Profile Picture" src={submittedData.photo}
-              sx={{ width: 156, height: 156 }}
-            />
-          )}
-          <Typography variant="h6">Username: {submittedData.username}</Typography>
-          <Typography variant="h6">Email: {submittedData.email}</Typography>
-          <Typography variant="body1">Description: {submittedData.description}</Typography>
-          <Typography variant="body1">Birthdate: {submittedData.birthdate}</Typography>
-          <Typography variant="body1">Social Media: {submittedData.socialMedia}</Typography>
-        </Box>
+        <Container maxWidth="md">
+          <Paper elevation={3} sx={{ mt: 4, p: 3 }}>
+            <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+              <Typography variant="h4">Your Profile</Typography>
+              <IconButton color="primary" onClick={() => setSubmittedData(null)}>
+                <EditIcon />
+              </IconButton>
+            </Grid>
+            <Grid container spacing={2} alignItems="center" justifyContent="center">
+              <Grid item>
+                <Avatar
+                  alt="Profile Picture"
+                  src={submittedData.photo}
+                  sx={{
+                    width: 156,
+                    height: 156,
+                    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.5)', // Blurry shadow effect
+                    borderRadius: '50%',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container direction="column" spacing={2}>
+                  <Grid container item direction="row" alignItems="center" justifyContent="evenly" >
+                    <Typography variant="body1" fontWeight="bold">Username:</Typography>
+                    <Typography variant="body1">{submittedData.username}</Typography>
+                  </Grid>
+                  <Grid container item direction="row" alignItems="center" justifyContent="evenly">
+                    <Typography variant="body1" fontWeight="bold">Email:</Typography>
+                    <Typography variant="body1">{submittedData.email}</Typography>
+                  </Grid>
+                  <Grid container item direction="row" alignItems="center" justifyContent="evenly">
+                    <Typography variant="body1" fontWeight="bold">Description:</Typography>
+                    <Typography variant="body1">{submittedData.description}</Typography>
+                  </Grid>
+                  <Grid container item direction="row" alignItems="center" justifyContent="evenly">
+                    <Typography variant="body1" fontWeight="bold">Birthdate:</Typography>
+                    <Typography variant="body1">{submittedData.birthdate}</Typography>
+                  </Grid>
+                  {/* Add any other profile information fields here */}
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Container>
       )}
     </Container>
   );
