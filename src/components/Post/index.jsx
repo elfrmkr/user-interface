@@ -47,7 +47,8 @@ const Post = ({ post, currentUser }) => {
                 name: 'John Doe',
                 avatar: 'https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=912&q=80'
             },
-            postId: "1"
+            postId: "1",
+
         },
         {
             text: 'This is a new random comment.',
@@ -78,7 +79,12 @@ const Post = ({ post, currentUser }) => {
 
     const handleAddComment = () => {
         if (newComment.trim() !== '') {
-            setComments([...comments, newComment]);
+            const comment = {
+                text: newComment,
+                date: new Date().toLocaleDateString(),
+                author: currentUser,
+            };
+            setComments([...comments, comment]);
             setNewComment('');
         }
     };
@@ -90,19 +96,34 @@ const Post = ({ post, currentUser }) => {
 
     const handleCommentLike = (index) => {
         const updatedComments = [...comments];
+        console.log(updatedComments);
         const comment = updatedComments[index];
-        comment.likeClicked = !comment.likeClicked;
-        comment.dislikeClicked = false;
+
+        if (!comment.likeClicked) {
+            comment.likeClicked = true;
+            comment.dislikeClicked = false;
+        } else {
+            comment.likeClicked = false;
+        }
+
         setComments(updatedComments);
     };
 
     const handleCommentDislike = (index) => {
         const updatedComments = [...comments];
         const comment = updatedComments[index];
-        comment.dislikeClicked = !comment.dislikeClicked;
-        comment.likeClicked = false;
+
+        if (!comment.dislikeClicked) {
+            comment.dislikeClicked = true;
+            comment.likeClicked = false;
+        } else {
+            comment.dislikeClicked = false;
+        }
+
         setComments(updatedComments);
     };
+
+
 
     return (
         <Card sx={{ maxWidth: 600, margin: '16px auto', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
