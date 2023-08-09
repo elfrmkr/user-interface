@@ -6,16 +6,13 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 
-const Signup = () => {
-  // State to manage form data
+const SignUp = () => {
+  // Stat to manage form data
   const [formData, setFormData] = useState({
     photo: '',
     username: '',
@@ -208,4 +205,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;
