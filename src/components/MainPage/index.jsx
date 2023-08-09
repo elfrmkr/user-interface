@@ -12,7 +12,17 @@ const postsData = [
             avatar: "https://plus.unsplash.com/premium_photo-1688572454849-4348982edf7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80",
             id: "1"
         },
-        postId: "1"
+        postId: "1",
+        comments: [{
+            text: 'This is a comment.',
+            date: '2023-07-27',
+            author: {
+                name: 'John Doe',
+                avatar: 'https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=912&q=80'
+            },
+            postId: "1",
+
+        },]
     },
 
     {
@@ -25,7 +35,16 @@ const postsData = [
             avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
             id: "2"
         },
-        postId: "2"
+        postId: "2",
+        comments: [{
+            text: 'This is a new random comment.',
+            date: '2023-09-27',
+            author: {
+                name: 'jane Doe',
+                avatar: 'https://plus.unsplash.com/premium_photo-1689551671541-31a345ce6ae0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80'
+            },
+            postId: "2"
+        },]
     },
     // Add more posts here
 ];
