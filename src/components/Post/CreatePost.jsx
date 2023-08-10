@@ -12,30 +12,87 @@ import {
     List,
     ListItem,
     ListItemText,
-    ListItemSecondaryAction,
-    Avatar,
+    Slide,
 } from '@mui/material';
 import { AttachFile, Delete } from '@mui/icons-material';
 
-const CreatePost = () => {
+
+const CreatePost = ({ onPost }) => {
     const [postContent, setPostContent] = useState('');
-    const [files, setFiles] = useState([]);
+    const [uploadedFile, setUploadedFile] = useState(null);
 
     const handleFileUpload = (event) => {
-        const selectedFiles = Array.from(event.target.files);
-        setFiles([...files, ...selectedFiles]);
+        const selectedFile = event.target.files[0];
+        setUploadedFile(selectedFile);
     };
 
-    const handleDeleteFile = (index) => {
-        const updatedFiles = [...files];
-        updatedFiles.splice(index, 1);
-        setFiles(updatedFiles);
+    const handleDeleteFile = () => {
+        setUploadedFile(null);
+    };
+
+    const renderMediaPreview = (file) => {
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+
+        if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+            return <img src={URL.createObjectURL(file)} alt={file.name} style={{ maxWidth: '100%', height: 'auto', maxHeight: '400px' }} />;
+        } else if (['pdf'].includes(fileExtension)) {
+            return <embed src={URL.createObjectURL(file)} type="application/pdf" width="100%" height="800px" />;
+        } else if (['mp4', 'webm'].includes(fileExtension)) {
+            return (
+                <video controls width="100%" height="auto" style={{ maxHeight: '400px' }}>
+                    <source src={URL.createObjectURL(file)} type={`video/${fileExtension}`} />
+                    Your browser does not support the video tag.
+                </video>
+            );
+        }
+
+        return null;
+    };
+
+    const handlePost = () => {
+        if (!uploadedFile) {
+            // Display an error message to the user that they must upload a file
+            return;
+        }
+
+        const fileExtension = uploadedFile.name.split('.').pop().toLowerCase();
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            const fileDataUrl = event.target.result;
+
+            let fileType = 'other'; // Default type if not recognized
+
+            if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+                fileType = 'image';
+            } else if (['mp4', 'webm'].includes(fileExtension)) {
+                fileType = 'video';
+            } else if (['pdf'].includes(fileExtension)) {
+                fileType = 'pdf';
+            }
+
+            const newPost = {
+                content: postContent,
+                media: {
+                    type: fileType,
+                    dataUrl: fileDataUrl,
+                },
+            };
+
+            onPost(newPost);
+            console.log(newPost);
+
+            setPostContent('');
+            setUploadedFile(null);
+        };
+
+        reader.readAsDataURL(uploadedFile);
     };
 
     return (
         <Card
             sx={{
-                maxWidth: 600,
+                maxWidth: 900,
                 margin: '16px auto',
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                 borderRadius: '8px',
@@ -45,7 +102,7 @@ const CreatePost = () => {
                 <Typography variant="h6">Create a New Post</Typography>
                 <TextField
                     multiline
-                    rows={4}
+                    rows={6}
                     fullWidth
                     label="Post Content"
                     value={postContent}
@@ -55,7 +112,7 @@ const CreatePost = () => {
                 <input
                     type="file"
                     id="file-input"
-                    multiple
+                    accept="image/*, video/*, application/pdf"
                     style={{ display: 'none' }}
                     onChange={handleFileUpload}
                 />
@@ -67,31 +124,27 @@ const CreatePost = () => {
                         startIcon={<AttachFile />}
                         sx={{ marginTop: 16 }}
                     >
-                        Upload Files
+                        Upload Media (Image, Video, PDF)
                     </Button>
                 </label>
-                <List sx={{ marginTop: 16 }}>
-                    {files.map((file, index) => (
-                        <ListItem key={index}>
-                            <Avatar>
-                                <AttachFile />
-                            </Avatar>
-                            <ListItemText primary={file.name} />
-                            <ListItemSecondaryAction>
-                                <IconButton
-                                    edge="end"
-                                    aria-label="delete"
-                                    onClick={() => handleDeleteFile(index)}
-                                >
+                {uploadedFile && (
+                    <Slide direction="right" in={uploadedFile !== null} mountOnEnter unmountOnExit>
+                        <List sx={{ marginTop: 4 }}>
+                            <ListItem>
+                                <ListItemText primary={uploadedFile.name} />
+                                <IconButton edge="end" aria-label="delete" onClick={handleDeleteFile}>
                                     <Delete />
                                 </IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    ))}
-                </List>
+                            </ListItem>
+                            <ListItem>
+                                <div style={{ width: "100%" }}>{renderMediaPreview(uploadedFile)}</div>
+                            </ListItem>
+                        </List>
+                    </Slide>
+                )}
             </CardContent>
             <CardActions>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={handlePost}>
                     Post
                 </Button>
             </CardActions>
