@@ -32,22 +32,39 @@ const CreatePost = ({ onPost }) => {
 
     const renderMediaPreview = (file) => {
         const fileExtension = file.name.split('.').pop().toLowerCase();
+        const containerStyle = {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '400px', // Set a fixed height for the container
+        };
 
         if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
-            return <img src={URL.createObjectURL(file)} alt={file.name} style={{ maxWidth: '100%', height: 'auto', maxHeight: '400px' }} />;
+            return (
+                <div style={containerStyle}>
+                    <img src={URL.createObjectURL(file)} alt={file.name} style={{ maxWidth: '100%', height: 'auto', maxHeight: '100%' }} />
+                </div>
+            );
         } else if (['pdf'].includes(fileExtension)) {
-            return <embed src={URL.createObjectURL(file)} type="application/pdf" width="100%" height="800px" />;
+            return (
+                <div style={containerStyle}>
+                    <embed src={URL.createObjectURL(file)} type="application/pdf" width="100%" height="100%" />
+                </div>
+            );
         } else if (['mp4', 'webm'].includes(fileExtension)) {
             return (
-                <video controls width="100%" height="auto" style={{ maxHeight: '400px' }}>
-                    <source src={URL.createObjectURL(file)} type={`video/${fileExtension}`} />
-                    Your browser does not support the video tag.
-                </video>
+                <div style={containerStyle}>
+                    <video controls width="100%" height="auto" style={{ maxHeight: '100%' }}>
+                        <source src={URL.createObjectURL(file)} type={`video/${fileExtension}`} />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
             );
         }
 
         return null;
     };
+
 
     const handlePost = () => {
         if (!uploadedFile) {
@@ -107,7 +124,7 @@ const CreatePost = ({ onPost }) => {
                     label="Post Content"
                     value={postContent}
                     onChange={(e) => setPostContent(e.target.value)}
-                    sx={{ marginTop: 16 }}
+                    sx={{ marginTop: 4 }}
                 />
                 <input
                     type="file"
@@ -122,7 +139,7 @@ const CreatePost = ({ onPost }) => {
                         color="primary"
                         component="span"
                         startIcon={<AttachFile />}
-                        sx={{ marginTop: 16 }}
+                        sx={{ marginTop: 4 }}
                     >
                         Upload Media (Image, Video, PDF)
                     </Button>
