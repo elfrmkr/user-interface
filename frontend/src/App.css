@@ -37,3 +37,35 @@
     transform: rotate(360deg);
   }
 }
+
+.gradient-background {
+  width: 100vw;
+  height: 100vh;
+  background: url('https://img.freepik.com/premium-vector/abstract-smooth-pastel-gradient-color-effect-background-website-poster-graphic-design_120819-733.jpg')no-repeat center center fixed;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* === HEADING STYLE #2 === */
+.two h1 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  line-height: 2em;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 32px;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+
+Button {
+  font-weight: 300;
+}

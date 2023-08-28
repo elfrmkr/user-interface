@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css'
 import { BrowserRouter as Router, Route, Routes, Link, Outlet } from 'react-router-dom';
 import {
   AppBar,
@@ -21,31 +22,29 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div>
-        <AppBar position="static">
+    <Router >
+      <div className="gradient-background">
+        <AppBar position="static" sx={{ background: "#f5f5f5", color: 'rgba(0, 0, 0, 0.6)' }}>
           <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               component={Link}
               to="/"
               variant="h6"
-              sx={{
-                width: 'fit-content',
-                fontFamily: 'cursive',
-                fontWeight: 'bold',
-                fontSize: '1.5rem',
-                letterSpacing: '0.1rem',
-                textTransform: 'uppercase',
-              }}
+
             >
-              SocialSpot
+              <div className="two">
+                <h1>SocialSpot</h1>
+              </div>
             </Button>
 
             <div>
               <Tooltip title="Create a post" placement="top">
                 <Button component={Link} to="/createPost">
                   <ControlPointRoundedIcon
-                    sx={{ color: 'white', fontSize: '30px' }}
+                    sx={{
+                      color: 'rgba(0, 0, 0, 0.4)',
+                      fontSize: '30px'
+                    }}
                   />
                 </Button>
               </Tooltip>
@@ -60,7 +59,7 @@ const App = () => {
                   padding: '6px 12px',
                   transition: 'background-color 0.3s ease-in-out',
                   '&:hover': {
-                    backgroundColor: '#56c1e0',
+                    backgroundColor: '#eaeaea',
                   },
                 }}
               >
@@ -77,7 +76,7 @@ const App = () => {
                   padding: '6px 12px',
                   transition: 'background-color 0.3s ease-in-out',
                   '&:hover': {
-                    backgroundColor: '#56c1e0',
+                    backgroundColor: '#eaeaea',
                   },
                 }}
               >
@@ -94,7 +93,7 @@ const App = () => {
                   padding: '6px 12px',
                   transition: 'background-color 0.3s ease-in-out',
                   '&:hover': {
-                    backgroundColor: '#56c1e0',
+                    backgroundColor: '#eaeaea',
                   },
                 }}
               >
@@ -104,7 +103,7 @@ const App = () => {
           </Toolbar>
         </AppBar>
 
-        <Container>
+        <Container >
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/signin" element={<SignIn />} />

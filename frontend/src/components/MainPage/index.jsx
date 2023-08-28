@@ -51,7 +51,7 @@ const postsData = [
 
 const MainPage = () => {
     return (
-        <div className="main-page">
+        <div>
             {postsData.map((post, index) => (
                 <Post key={index} post={post} />
             ))}
