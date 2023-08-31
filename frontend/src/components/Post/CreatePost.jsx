@@ -14,6 +14,10 @@ import {
     ListItemText,
     Slide,
 } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+
 import { AttachFile, Delete } from '@mui/icons-material';
 
 
@@ -109,23 +113,34 @@ const CreatePost = ({ onPost }) => {
     return (
         <Card
             sx={{
+                width: '100%',
                 maxWidth: 900,
-                margin: '16px auto',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                 borderRadius: '8px',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                border: '1px solid #dbdbdb',
             }}
         >
             <CardContent>
-                <Typography variant="h6">Create a New Post</Typography>
+                <Typography variant="h6" sx={{ marginBottom: 2 }}>Create a New Post</Typography>
                 <TextField
                     multiline
                     rows={6}
                     fullWidth
-                    label="Post Content"
+                    placeholder="What's on your mind?"
                     value={postContent}
                     onChange={(e) => setPostContent(e.target.value)}
-                    sx={{ marginTop: 4 }}
+                    sx={{ marginBottom: 2 }}
                 />
+                <InputLabel htmlFor="file-input" sx={{ marginBottom: 1 }}>
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        component="span"
+                        startIcon={<AttachFileIcon />}
+                    >
+                        Upload Media (Image, Video, PDF)
+                    </Button>
+                </InputLabel>
                 <input
                     type="file"
                     id="file-input"
@@ -133,28 +148,17 @@ const CreatePost = ({ onPost }) => {
                     style={{ display: 'none' }}
                     onChange={handleFileUpload}
                 />
-                <label htmlFor="file-input">
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        component="span"
-                        startIcon={<AttachFile />}
-                        sx={{ marginTop: 4 }}
-                    >
-                        Upload Media (Image, Video, PDF)
-                    </Button>
-                </label>
                 {uploadedFile && (
                     <Slide direction="right" in={uploadedFile !== null} mountOnEnter unmountOnExit>
-                        <List sx={{ marginTop: 4 }}>
-                            <ListItem>
+                        <List sx={{ marginTop: 2 }}>
+                            <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
                                 <ListItemText primary={uploadedFile.name} />
                                 <IconButton edge="end" aria-label="delete" onClick={handleDeleteFile}>
-                                    <Delete />
+                                    <DeleteIcon />
                                 </IconButton>
                             </ListItem>
                             <ListItem>
-                                <div style={{ width: "100%" }}>{renderMediaPreview(uploadedFile)}</div>
+                                <div style={{ width: '100%' }}>{renderMediaPreview(uploadedFile)}</div>
                             </ListItem>
                         </List>
                     </Slide>

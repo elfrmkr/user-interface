@@ -103,7 +103,14 @@ const App = () => {
           </Toolbar>
         </AppBar>
 
-        <Container >
+        <Container
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center', // Center vertically
+            alignItems: 'center', // Center horizontally
+            height: '80vh', // Set full viewport height
+          }} >
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/signin" element={<SignIn />} />
